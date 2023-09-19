@@ -74,6 +74,19 @@ func main() {
 	}
 	fmt.Printf("Protocol: %d\n", handshake.Protocol)
 
+	packet = packet[unsafe.Sizeof(handshake.Protocol):]
+
+	// next arg is a null-terminated string, find the null byte
+	index := -1
+	for i, b := range packet {
+		if b == 0x00 {
+			index = i
+			break
+		}
+	}
+	handshake.Version = string(packet[0:index])
+	fmt.Printf("Version: %s\n", handshake.Version)
+
 }
 
 // colectInputs parses the CLI arguements provided
