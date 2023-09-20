@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 const (
@@ -29,12 +31,20 @@ func main() {
 	fmt.Println("About to read from conn")
 	packet := make([]byte, 128)
 	bytesRead, err := bufio.NewReader(conn).Read(packet)
+	if err != nil {
+		fmt.Printf("couldn't read server reply into a byte array: %v", err)
+		return
+	}
 
 	fmt.Printf("Rec. %d bytes\n%x\n", bytesRead, packet)
 
 	fmt.Printf("Packet as string: %s\n", packet)
 
-	handshake, err := parsePacket(packet)
-	fmt.Printf("Protocol: %d", handshake.Protocol)
+	handshake, err := parsePacket(packet[0:bytesRead])
+	if err != nil {
+		fmt.Printf("could not parse handshake packet: %v\n", err)
+		return
+	}
+	fmt.Printf("Handshake: %v", spew.Sdump(*handshake))
 
 }
