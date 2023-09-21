@@ -6,7 +6,10 @@ If there is an instance running, a sample of information included from the hands
 ## Build
 
 From the `mysql-port-scanner/` directory, run
-`go build .`
+
+```shell
+go build .
+```
 
 ## Run
 
@@ -16,7 +19,7 @@ Usage of ./mysql-port-scanner:
         the IP address this scanner should connect to (default "0.0.0.0")
   -port uint
         the port this scanner should connect to
-  --help
+  -help
         prints out this usage information
 ```
 
@@ -27,19 +30,22 @@ Usage of ./mysql-port-scanner:
 ```
 
 ## Sample Output
+
 ```shell
 go build .  && ./mysql-port-scanner --ip 127.0.0.1 --port 3306
-MySQL Handshake Tool
+MySQL instance is running on:
+IP: 127.0.0.1
+Port: 3306
 
-Sample of fields from the MySQL Handshake
 Protocol: 10
 Version: 8.1.0
 Thread ID: 12
+Authentication Plugin: mysql_native_password
 ```
 
 ## Testing
 
-To test functionality, you can use the included `docker-compose.yml` file.
+To test functionality, you can use the included `docker-compose.yml` file to start a MySQL docker container running on the default port (`3306`)
 
 [Source of MySQL docker-compose.yml](https://hub.docker.com/_/mysql)
 
@@ -48,5 +54,3 @@ To start the MySQL docker container, from the `mysql-port-scanner/` directory ru
 ```shell
 docker-compose -f docker-compose.yml up
 ```
-
-This exposes the default MySQL port of `3306`

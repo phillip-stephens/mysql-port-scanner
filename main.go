@@ -38,5 +38,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("Sample of fields from the MySQL Handshake\n%s", handshake)
+	fmt.Printf("MySQL instance is running on:\n"+
+		"IP: %s\n"+
+		"Port: %d\n\n"+
+		"%s", inputs.IP, inputs.Port, handshake)
 }
