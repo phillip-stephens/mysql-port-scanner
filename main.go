@@ -4,8 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
-
-	"github.com/davecgh/go-spew/spew"
+	"os"
 )
 
 const (
@@ -13,38 +12,31 @@ const (
 )
 
 func main() {
-	fmt.Println("MySQL scanner invoked")
 	inputs, err := collectInputs()
 	if err != nil {
 		fmt.Printf("unable to parse inputs: %v\nExiting", err)
-		return
+		os.Exit(1)
 	}
-	fmt.Printf("IP: %v\nPort: %d\n\n", inputs.IP, inputs.Port)
 
-	// connect
+	// connect to MySQL server
 	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", inputs.IP, inputs.Port))
 	if err != nil {
-		// TODO add logging about how MySQL isn't running
-		fmt.Printf("could not dial MySQL server: %v\n", err)
+		fmt.Printf("no MySQL instance responded on IP %v and port %d", inputs.IP, inputs.Port)
 		return
 	}
-	fmt.Println("About to read from conn")
+
 	packet := make([]byte, 128)
 	bytesRead, err := bufio.NewReader(conn).Read(packet)
 	if err != nil {
-		fmt.Printf("couldn't read server reply into a byte array: %v", err)
-		return
+		fmt.Printf("couldn't copy server reply into a byte array: %v", err)
+		os.Exit(1)
 	}
-
-	fmt.Printf("Rec. %d bytes\n%x\n", bytesRead, packet)
-
-	fmt.Printf("Packet as string: %s\n", packet)
 
 	handshake, err := parsePacket(packet[0:bytesRead])
 	if err != nil {
 		fmt.Printf("could not parse handshake packet: %v\n", err)
-		return
+		os.Exit(1)
 	}
-	fmt.Printf("Handshake: %v", spew.Sdump(*handshake))
 
+	fmt.Printf("Sample of fields from the MySQL Handshake\n%s", handshake)
 }

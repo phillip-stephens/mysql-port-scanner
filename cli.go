@@ -6,12 +6,10 @@ import (
 	"net"
 )
 
-
 type CLIInputs struct {
 	IP   net.IP
 	Port uint
 }
-
 
 // colectInputs parses the CLI arguements provided
 // Returns arguements in a CLIInputs struct and any error that occured
