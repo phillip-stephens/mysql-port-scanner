@@ -28,13 +28,13 @@ func main() {
 	packet := make([]byte, 128)
 	bytesRead, err := bufio.NewReader(conn).Read(packet)
 	if err != nil {
-		fmt.Printf("couldn't copy server reply into a byte array: %v", err)
+		fmt.Printf("error: couldn't copy server reply into a byte array: %v", err)
 		os.Exit(1)
 	}
 
 	handshake, err := parsePacket(packet[0:bytesRead])
 	if err != nil {
-		fmt.Printf("could not parse handshake packet: %v\n", err)
+		fmt.Printf("error: could not parse handshake packet: %v\n", err)
 		os.Exit(1)
 	}
 
