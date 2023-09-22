@@ -8,7 +8,7 @@ import (
 	"github.com/zhuangsirui/binpacker"
 )
 
-// MySQLHandshake represents the inital handshake msg a MySQL instance sends to a connecting client
+// MySQLHandshake represents the initial handshake msg a MySQL instance sends to a connecting client
 type MySQLHandshake struct {
 	PacketLength         uint32 `json:"packet_len"`
 	Protocol             uint8  `json:"protocol_version"`
@@ -25,7 +25,7 @@ func (h *MySQLHandshake) String() string {
 }
 
 // parsePacket is the main function that parses the byte array returned from the MySQL server handshake into the Handshake struct
-// Returns a ptr to a MySQLHandshake struct, and any error that occured
+// Returns a ptr to a MySQLHandshake struct, and any error that occurred
 func parsePacket(packet []byte) (*MySQLHandshake, error) {
 	// var protocol uint8
 	handshake := MySQLHandshake{}

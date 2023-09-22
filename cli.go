@@ -11,8 +11,8 @@ type CLIInputs struct {
 	Port uint
 }
 
-// colectInputs parses the CLI arguements provided
-// Returns arguements in a CLIInputs struct and any error that occured
+// collectInputs parses the CLI arguments provided
+// Returns arguments in a CLIInputs struct and any error that occurred
 func collectInputs() (*CLIInputs, error) {
 	// Parse CLI inputs
 	ipPtr := flag.String("ip", "0.0.0.0", "the IP address this scanner should connect to")
